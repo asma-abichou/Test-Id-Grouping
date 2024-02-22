@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+{% block title %}Members{% endblock %}
+{% block body %}
+    <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
+        <div class="container-fluid px-4">
+            <div class="page-header-content">
+                <div class="row align-items-center justify-content-between pt-3">
+                    <div class="col-auto mb-3">
+                        <h1 class="page-header-title">
+                            <div class="page-header-icon"><i data-feather="user"></i></div>
+                            List des Membres
+                        </h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- Main page content-->
+    <div class="container-fluid px-4">
+        <div class="card">
+            <div class="card-body">
+                <table id="datatablesSimple">
+                    <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Fonctionnalité</th>
+                        <th>Date d'inscription</th>
+                        <th>Actif</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tfoot>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Fonctionnalité</th>
+                        <th>Date d'inscription</th>
+                        <th>Actif</th>
+                        <th>Action</th>
+                    </tr>
+                    </tfoot>
+                    <tbody>
+                    {% for member in members %}
+                    <tr>
+                        <td>{{ member.name }}</td>
+                        <td>{{ member.job }}</td>
+                        <td>24/01/2024</td>
+                        <td><span class="badge bg-green-soft text-green">active</span></td>
+                        <td>
+                            <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="{{ path('app_member_edit') }}"><i data-feather="edit"></i></a>
+                            <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i data-feather="trash-2"></i></a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block additionalJavascript %}
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
+<script src="{{ asset('dist/js/datatables/datatables-simple-demo.js') }}"></script>
+{% endblock %}
