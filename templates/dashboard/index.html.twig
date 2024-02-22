@@ -1,0 +1,98 @@
+{% extends 'base.html.twig' %}
+{% block title %}Members{% endblock %}
+{% block body %}
+    <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
+        <div class="container-fluid px-4">
+            <div class="page-header-content">
+                <div class="row align-items-center justify-content-between pt-3">
+                    <div class="col-auto mb-3">
+                        <h1 class="page-header-title">
+                            <div class="page-header-icon"><i data-feather="user"></i></div>
+                            Users List
+                        </h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- Main page content-->
+    <div class="container-fluid px-4">
+        <div class="card">
+            <div class="card-body">
+                <table id="datatablesSimple">
+                    <thead>
+                    <tr>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Groups</th>
+                        <th>Joined Date</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tfoot>
+                    <tr>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Groups</th>
+                        <th>Joined Date</th>
+                        <th>Actions</th>
+                    </tr>
+                    </tfoot>
+                    <tbody>
+                    <tr>
+                        <td>tiger@email.com</td>
+                        <td>Administrator</td>
+                        <td>
+                            <span class="badge bg-green-soft text-green">Sales</span>
+                            <span class="badge bg-blue-soft text-blue">Developers</span>
+                            <span class="badge bg-red-soft text-red">Marketing</span>
+                            <span class="badge bg-purple-soft text-purple">Managers</span>
+                            <span class="badge bg-yellow-soft text-yellow">Customer</span>
+                        </td>
+                        <td>20 Jun 2021</td>
+                        <td>
+                            <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="user-management-edit-user.html"><i data-feather="edit"></i></a>
+                            <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i data-feather="trash-2"></i></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>gwinterse@email.com</td>
+                        <td>Administrator</td>
+                        <td>
+                            <span class="badge bg-green-soft text-green">Sales</span>
+                            <span class="badge bg-blue-soft text-blue">Developers</span>
+                            <span class="badge bg-red-soft text-red">Marketing</span>
+                            <span class="badge bg-purple-soft text-purple">Managers</span>
+                            <span class="badge bg-yellow-soft text-yellow">Customer</span>
+                        </td>
+                        <td>20 Jun 2021</td>
+                        <td>
+                            <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="user-management-edit-user.html"><i data-feather="edit"></i></a>
+                            <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i data-feather="trash-2"></i></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>ashtonc@email.com</td>
+                        <td>Registered</td>
+                        <td>
+                            <span class="badge bg-green-soft text-green">Sales</span>
+                            <span class="badge bg-red-soft text-red">Marketing</span>
+                        </td>
+                        <td>20 Jun 2021</td>
+                        <td>
+                            <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="user-management-edit-user.html"><i data-feather="edit"></i></a>
+                            <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i data-feather="trash-2"></i></a>
+                        </td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block additionalJavascript %}
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
+<script src="{{ asset('dist/js/datatables/datatables-simple-demo.js') }}"></script>
+{% endblock %}
