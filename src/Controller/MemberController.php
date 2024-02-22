@@ -3,8 +3,9 @@
 namespace App\Controller;
 use App\Entity\Member;
 use App\Repository\MemberRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Attribute\Route;
 
 
@@ -20,11 +21,19 @@ class MemberController extends AbstractController
         ]);
     }
 
-    #[Route('/member/edit', name: 'app_member_edit')]
-    public function editMember(): Response
+    #[Route('/member/edit', name: 'app_member_edit_form')]
+    public function editMemberList(): Response
     {
-        return $this->render('member/index.html.twig', [
+        return $this->render('member/edit-member.html.twig', [
             'controller_name' => 'MemberController',
         ]);
     }
+    #[Route('/member/{memberId}/edit', name: 'app_member_edit', methods: 'POST')]
+    public function editMemberProcess(Request $request, MemberRepository $memberRepository): Response
+    {
+        return $this->render('member/edit-member.html.twig', [
+            'controller_name' => 'MemberController',
+        ]);
+    }
+
 }
