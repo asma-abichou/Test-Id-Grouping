@@ -67,4 +67,17 @@ class MemberController extends AbstractController
         return $this->redirectToRoute('members_list');
 
     }
+    #[Route('/{memberId}/delete', name: 'member_to_delete', methods: ['GET','POST'])]
+    public function removeMember(Request $request, $memberId, MemberRepository $memberRepository): Response
+    {
+        //$data = $request->request->all();
+        $memberToDelete = $memberRepository->find($memberId);
+        //dd($memberToDelete);
+
+        $this->entityManager->remove($memberToDelete);
+        $this->entityManager->flush();
+        return $this->redirectToRoute('members_list');
+
+    }
+
 }
