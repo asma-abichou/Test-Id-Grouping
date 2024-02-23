@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-{% block title %}Members{% endblock %}
+{% block title %}Liste des Membres{% endblock %}
 {% block body %}
     <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
         <div class="container-fluid px-4">
@@ -8,7 +8,7 @@
                     <div class="col-auto mb-3">
                         <h1 class="page-header-title">
                             <div class="page-header-icon"><i data-feather="user"></i></div>
-                            List des Membres
+                            Liste des Membres
                         </h1>
                     </div>
                 </div>
@@ -44,9 +44,15 @@
                         <td>{{ member.name }}</td>
                         <td>{{ member.job }}</td>
                         <td>24/01/2024</td>
-                        <td><span class="badge bg-green-soft text-green">active</span></td>
                         <td>
-                            <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="{{ path('app_member_form', {'memberId': member.id}) }}"><i data-feather="edit"></i></a>
+                            {% if member.actif == 0 %}
+                                <span class="badge bg-green-soft text-red">non actif</span>
+                            {% elseif member.actif == 1 %}
+                                <span class="badge bg-green-soft text-green">actif</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="{{ path('member_show_edit_form', {'memberId': member.id}) }}"><i data-feather="edit"></i></a>
                             <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i data-feather="trash-2"></i></a>
                         </td>
                     </tr>

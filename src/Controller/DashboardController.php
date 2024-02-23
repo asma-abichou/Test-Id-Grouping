@@ -2,25 +2,27 @@
 
 namespace App\Controller;
 
+use App\Repository\MemberRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+#[Route('/dashboard')]
 class DashboardController extends AbstractController
 {
-    #[Route('/dashboard', name: 'app_dashboard')]
-    public function index(): Response
+    #[Route('/home', name: 'home')]
+    public function home(MemberRepository $memberRepository): Response
     {
-        return $this->render('dashboard/home.html.twig');
+        $allMembers = $memberRepository->findAll();
+        //$allMembersCount = count($allMembers);
+        //dd(count($sumMember));
+        return $this->render('dashboard/home.html.twig', [
+            'allMembers' => $allMembers
+        ]);
     }
-    #[Route('/dashboard/home', name: 'app_dashboard_home')]
-    public function home(): Response
+    #[Route('/settings', name: 'settings')]
+    public function settings(): Response
     {
-        return $this->render('dashboard/home.html.twig');
-    }
-    #[Route('/dashboard/settings', name: 'app_dashboard_settings')]
-    public function settingsUser(): Response
-    {
-        return $this->render('dashboard/account-profile.html.twig');
+        return $this->render('dashboard/account_profile.html.twig');
     }
 }

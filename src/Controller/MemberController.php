@@ -10,7 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Attribute\Route;
 
 
-#[Route('/dashboard')]
+#[Route('/dashboard/members')]
 class MemberController extends AbstractController
 {
     public function __construct(
@@ -19,48 +19,52 @@ class MemberController extends AbstractController
     {
     }
 
-    #[Route('/member', name: 'app_member')]
-    public function showMember(MemberRepository $memberRepository): Response
+    // List of all the members
+    #[Route('/list', name: 'members_list', methods: 'GET')]
+    public function membersList(MemberRepository $memberRepository): Response
     {
         $allMembers = $memberRepository->findAll();
-        return $this->render('member/list-member.html.twig', [
+        return $this->render('member/list.html.twig', [
             "members" => $allMembers
         ]);
     }
-    #[Route('/member/{memberId}/edit', name: 'app_member_form')]
-    public function showEditMember($memberId, MemberRepository $memberRepository): Response
+    #[Route('/{memberId}/edit', name: 'member_show_edit_form', methods: 'GET')]
+    public function memberShowEditForm($memberId, MemberRepository $memberRepository): Response
     {
         $memberToEdit = $memberRepository->find($memberId);
-        return $this->render('member/edit-member.html.twig', [
+        return $this->render('member/edit.html.twig', [
             'memberToEdit' => $memberToEdit,
         ]);
     }
-    #[Route('/member/{memberId}/edit', name: 'app_member_edit', methods: 'POST')]
-    public function editMemberProcess(Request $request, $memberId, MemberRepository $memberRepository): Response
+    #[Route('/{memberId}/edit', name: 'member_save_edit_form', methods: 'POST')]
+    public function memberSaveEditForm(Request $request, $memberId, MemberRepository $memberRepository): Response
     {
-        //dd('test');
         $data = $request->request->all();
         $name = $data["name"];
         $email = $data["email"];
+        $address = $data["address"];
         $city = $data["city"];
+        $postCode = $data["postCode"];
+        $country = $data["country"];
 
-        if(($name === "") || ($email === "")|| ($city === ""))
+        if(($name === "") || ($email === "") || ($address === ""))
         {
             $this->addFlash('editMemberWarning', 'Please fill all the fields!');
-            return $this->redirectToRoute('app_member_form', [
+            return $this->redirectToRoute('member_show_edit_form', [
                 "memberId" => $memberId
             ]);
         }
         $memberToEdit = $memberRepository->find($memberId);
         $memberToEdit->setName($name);
         $memberToEdit->setEmail($email);
+        $memberToEdit->setAddress($address);
         $memberToEdit->setCity($city);
-        //dump($memberToEdit);
+        $memberToEdit->setPostCode($postCode);
+        $memberToEdit->setCountry($country);
         $this->entityManager->persist($memberToEdit);
         $this->entityManager->flush();
-        $this->addFlash('editSuccess', 'Student Edited Successfully!');
-
-        return $this->redirectToRoute('app_member');
+        $this->addFlash('editSuccess', 'Member Edited Successfully!');
+        return $this->redirectToRoute('members_list');
 
     }
 }

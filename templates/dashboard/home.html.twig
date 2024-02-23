@@ -23,15 +23,18 @@
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="me-3">
                                 <div class="text-white-75 small">Membres</div>
-                                <div class="text-lg fw-bold">0</div>
-
+                                <div class="text-lg fw-bold">{{ allMembers|length }}</div>
                             </div>
-                            <i class="feather-xl text-white-50" data-feather="calendar"></i>
+                            <i class="feather-xl text-white-50" data-feather="user"></i>
                         </div>
                     </div>
                     <div class="card-footer d-flex align-items-center justify-content-between small">
+                        <a class="text-white stretched-link" href="{{ path('members_list') }}">Liste des Membres</a>
                         <div class="text-white"><i class="fas fa-angle-right"></i></div>
                     </div>
+                    {#<div class="card-footer d-flex align-items-center justify-content-between small">
+                        <div class="text-white"><i class="fas fa-angle-right"></i><a href="{{ path('app_member') }}"></a></div>
+                    </div>#}
                 </div>
             </div>
 {% endblock %}
