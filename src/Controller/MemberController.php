@@ -28,6 +28,14 @@ class MemberController extends AbstractController
             "members" => $allMembers
         ]);
     }
+    #[Route('/{memberId}/list', name: 'members_selected_show', methods: 'GET')]
+    public function showMembersSelected($memberId, MemberRepository $memberRepository): Response
+    {
+        $showMember = $memberRepository->findAll($memberId);
+        return $this->render('member/show.html.twig', [
+            "showMember" => $showMember
+        ]);
+    }
     #[Route('/{memberId}/edit', name: 'member_show_edit_form', methods: 'GET')]
     public function memberShowEditForm($memberId, MemberRepository $memberRepository): Response
     {
@@ -46,7 +54,7 @@ class MemberController extends AbstractController
         $city = $data["city"];
         $postCode = $data["postCode"];
         $country = $data["country"];
-
+        $coverImg = $data["coverImg"];
         if(($name === "") || ($email === "") || ($address === ""))
         {
             $this->addFlash('editMemberWarning', 'Please fill all the fields!');
@@ -70,13 +78,13 @@ class MemberController extends AbstractController
     #[Route('/{memberId}/delete', name: 'member_to_delete', methods: ['GET','POST'])]
     public function removeMember(Request $request, $memberId, MemberRepository $memberRepository): Response
     {
-        //$data = $request->request->all();
+      /*  //$data = $request->request->all();
         $memberToDelete = $memberRepository->find($memberId);
         //dd($memberToDelete);
-
         $this->entityManager->remove($memberToDelete);
         $this->entityManager->flush();
-        return $this->redirectToRoute('members_list');
+        $this->addFlash('deleteSuccess', 'Member deleted Successfully!');
+        return $this->redirectToRoute('members_list');*/
 
     }
 

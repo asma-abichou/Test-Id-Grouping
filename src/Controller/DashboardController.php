@@ -14,8 +14,6 @@ class DashboardController extends AbstractController
     public function home(MemberRepository $memberRepository): Response
     {
         $allMembers = $memberRepository->findAll();
-        //$allMembersCount = count($allMembers);
-        //dd(count($sumMember));
         return $this->render('dashboard/home.html.twig', [
             'allMembers' => $allMembers
         ]);
