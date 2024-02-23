@@ -23,7 +23,7 @@
                 <div class="card mb-4">
                     <div class="card-header">Account Details</div>
                     <div class="card-body">
-                        {#<form action="{{ path('member_save_edit_form', {'memberId': memberToEdit.id}) }}" method="POST">#}
+                       {# <form action="{{ path('members_selected_show', {'showMember': showMember.id}) }}" >#}
                             <div class="row gx-3 mb-3">
                                 <div class="form-check mb-2">
 
@@ -35,40 +35,36 @@
                             <div class="row gx-3 mb-3">
                                 <div class="card-body text-center">
                                     <!-- Profile picture image-->
-                                    <img class="img-account-profile rounded-circle mb-2" src="{{ asset('dist/assets/img/illustrations/profiles/profile-2.png') }}" alt="" />
-                                    <!-- Profile picture help block-->
-                                    <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
-                                    <!-- Profile picture upload button-->
-                                    <button class="btn btn-primary" type="file">Upload new image</button>
+                                    <img class="img-account-profile rounded-circle mb-2" src="{{ asset('uploaded-pictures/' ~ showMember.coverImg) }}" alt="" />
                                 </div>
                             </div>
 
                             <div class="row gx-3 mb-3">
                                 <div class="col-md-6">
                                     <label class="small mb-1" for="inputUsername">Nom </label>
-                                    <input class="form-control" name="name" id="inputUsername" type="text" placeholder="Entrez votre nom ..." value="" />
+                                    <input class="form-control" name="name" id="inputUsername" type="text" placeholder="Entrez votre nom ..." value="{{ showMember.name }}" readonly/>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="small mb-1" for="inputEmail">Email</label>
-                                    <input class="form-control" name="email" id="inputEmail" type="email" placeholder="Entrez votre email..." value="" />
+                                    <input class="form-control" name="email" id="inputEmail" type="email" placeholder="Entrez votre email..." value="{{ showMember.email }}" readonly/>
                                 </div>
                             </div>
 
                             <div class="row gx-3 mb-3">
                                 <div class="col-md-12">
                                     <label class="small mb-1" for="inputAdresse">Adresse</label>
-                                    <input class="form-control" name="address" id="inputAdresse" type="text" placeholder="Entrez votre adresse ..." value="" />
+                                    <input class="form-control" name="address" id="inputAdresse" type="text" placeholder="Entrez votre adresse ..." value="{{ showMember.address }}" readonly/>
                                 </div>
                             </div>
 
                             <div class="row gx-3 mb-3">
                                 <div class="col-md-6">
                                     <label class="small mb-1" for="inputCity">Ville</label>
-                                    <input class="form-control" name="city" id="inputCity" type="text" placeholder="Entrez votre ville ... " value="" />
+                                    <input class="form-control" name="city" id="inputCity" type="text" placeholder="Entrez votre ville ... " value="{{ showMember.city }}" readonly/>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="small mb-1" for="inputPhone">Télephone</label>
-                                    <input class="form-control" name="phone" id="inputPhone" type="tel" placeholder="Entrez votre télèphone ..." value="" />
+                                    <input class="form-control" name="phone" id="inputPhone" type="tel" placeholder="Entrez votre télèphone ..." value="" readonly/>
                                 </div>
                             </div>
 
@@ -76,11 +72,11 @@
                             <div class="row gx-3 mb-3">
                                 <div class="col-md-6">
                                     <label class="small mb-1" for="inputCodePost">Code postal</label>
-                                    <input class="form-control" name="postCode" id="inputCodePost" type="text" placeholder="Entrez votre code postal ..." value="" />
+                                    <input class="form-control" name="postCode" id="inputCodePost" type="text" placeholder="Entrez votre code postal ..." value="{{ showMember.postCode }}" readonly/>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="small mb-1" for="inputCountry">Pays</label>
-                                    <input class="form-control" name="country" id="inputCountry" type="text" placeholder="Entrez votre pays ..." value="" />
+                                    <input class="form-control" name="country" id="inputCountry" type="text" placeholder="Entrez votre pays ..." value="{{ showMember.country }}" readonly/>
                                 </div>
                             </div>
 

@@ -30,14 +30,16 @@ class MemberController extends AbstractController
             "members" => $allMembers
         ]);
     }
+    //Show a Member
     #[Route('/{memberId}/list', name: 'members_selected_show', methods: 'GET')]
     public function showMembersSelected($memberId, MemberRepository $memberRepository): Response
     {
-        $showMember = $memberRepository->findAll($memberId);
+        $showMember = $memberRepository->find($memberId);
         return $this->render('member/show.html.twig', [
             "showMember" => $showMember
         ]);
     }
+    //Show Member to edit
     #[Route('/{memberId}/edit', name: 'member_show_edit_form', methods: 'GET')]
     public function memberShowEditForm($memberId, MemberRepository $memberRepository): Response
     {
@@ -46,6 +48,7 @@ class MemberController extends AbstractController
             'memberToEdit' => $memberToEdit,
         ]);
     }
+    //Process edit a member
     #[Route('/{memberId}/edit', name: 'member_save_edit_form', methods: 'POST')]
     public function memberSaveEditForm(Request $request, $memberId, MemberRepository $memberRepository): Response
     {
@@ -58,7 +61,7 @@ class MemberController extends AbstractController
         $country = $data["country"];
         $pictureFile = $request->files->get('coverImg');
 
-        if(($name === "") || ($email === "") || ($address === ""))
+        if(($name === "") || ($email === "") || ($address === "") )
         {
             $this->addFlash('editMemberWarning', 'Please fill all the fields!');
             return $this->redirectToRoute('member_show_edit_form', [
@@ -85,12 +88,14 @@ class MemberController extends AbstractController
             // Saving picture path in the database
             $memberToEdit->setCoverImg($pictureFileName);
         }
+
         $this->entityManager->persist($memberToEdit);
         $this->entityManager->flush();
-        $this->addFlash('editSuccess', 'Member Edited Successfully!');
+        $this->addFlash('editMemberSuccess', 'Member Edited Successfully!');
         return $this->redirectToRoute('members_list');
 
     }
+    //Delete a Member
     #[Route('/{memberId}/delete', name: 'member_to_delete', methods: ['GET','POST'])]
     public function removeMember(Request $request, $memberId, MemberRepository $memberRepository): Response
     {

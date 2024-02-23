@@ -17,13 +17,18 @@
     </header>
     <!-- Main page content-->
     <div class="container-fluid px-4">
+        {% for errorMessage in app.flashes('editMemberSuccess') %}
+            <div class="alert alert-success">
+                {{ errorMessage }}
+            </div>
+        {% endfor %}
         <div class="card">
             <div class="card-body">
                 <table id="datatablesSimple">
                     <thead>
                     <tr>
                         <th>Nom</th>
-                        <th>Fonctionnalité</th>
+                        <th>Fonction</th>
                         <th>Date d'inscription</th>
                         <th>Actif</th>
                         <th>Action</th>
@@ -32,7 +37,7 @@
                     <tfoot>
                     <tr>
                         <th>Nom</th>
-                        <th>Fonctionnalité</th>
+                        <th>Fonction</th>
                         <th>Date d'inscription</th>
                         <th>Actif</th>
                         <th>Action</th>
