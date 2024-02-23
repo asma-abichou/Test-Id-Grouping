@@ -4,6 +4,8 @@ namespace App\Controller;
 use App\Entity\Member;
 use App\Repository\MemberRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Form\FileUploadError;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -54,7 +56,8 @@ class MemberController extends AbstractController
         $city = $data["city"];
         $postCode = $data["postCode"];
         $country = $data["country"];
-        $coverImg = $data["coverImg"];
+        $pictureFile = $request->files->get('coverImg');
+
         if(($name === "") || ($email === "") || ($address === ""))
         {
             $this->addFlash('editMemberWarning', 'Please fill all the fields!');
@@ -69,6 +72,19 @@ class MemberController extends AbstractController
         $memberToEdit->setCity($city);
         $memberToEdit->setPostCode($postCode);
         $memberToEdit->setCountry($country);
+        if ($pictureFile){
+            //generate a name  for picture
+            $pictureFileName = md5(uniqid ()). $pictureFile->getClientOriginalName();
+            //remove space from the name picture
+            $pictureFileName = str_replace(" ", "", $pictureFileName);
+            $picturePath =  "/public/uploaded-pictures/";
+            // get full path where to upload the picture
+            $fullPath = $this->getParameter('kernel.project_dir') . $picturePath;
+            // uploading the picture to the folder
+            $pictureFile->move($fullPath, $pictureFileName);
+            // Saving picture path in the database
+            $memberToEdit->setCoverImg($pictureFileName);
+        }
         $this->entityManager->persist($memberToEdit);
         $this->entityManager->flush();
         $this->addFlash('editSuccess', 'Member Edited Successfully!');
@@ -87,5 +103,6 @@ class MemberController extends AbstractController
         return $this->redirectToRoute('members_list');*/
 
     }
-
 }
+
+
