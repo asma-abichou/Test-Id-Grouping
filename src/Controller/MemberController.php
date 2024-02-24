@@ -63,7 +63,7 @@ class MemberController extends AbstractController
 
         if(($name === "") || ($email === "") || ($address === "") )
         {
-            $this->addFlash('editMemberWarning', 'Please fill all the fields!');
+            $this->addFlash('editMemberWarning', 'Veuillez remplir tous les champs!');
             return $this->redirectToRoute('member_show_edit_form', [
                 "memberId" => $memberId
             ]);
@@ -91,20 +91,20 @@ class MemberController extends AbstractController
 
         $this->entityManager->persist($memberToEdit);
         $this->entityManager->flush();
-        $this->addFlash('editMemberSuccess', 'Member Edited Successfully!');
+        $this->addFlash('editMemberSuccess', 'Membre modifié avec succès!');
         return $this->redirectToRoute('members_list');
 
     }
     //Delete a Member
-    #[Route('/{memberId}/delete', name: 'member_to_delete', methods: ['GET','POST'])]
-    public function removeMember(Request $request, $memberId, MemberRepository $memberRepository): Response
+    #[Route('/{memberId}/delete', name: 'member_to_delete')]
+    public function removeMember($memberId, MemberRepository $memberRepository): Response
     {
         //$data = $request->request->all();
         $memberToDelete = $memberRepository->find($memberId);
         //dd($memberToDelete);
         $this->entityManager->remove($memberToDelete);
         $this->entityManager->flush();
-        $this->addFlash('deleteSuccess', 'Member deleted Successfully!');
+        $this->addFlash('deleteSuccess', 'Membre supprimé avec succès!');
         return $this->redirectToRoute('members_list');
     }
 }

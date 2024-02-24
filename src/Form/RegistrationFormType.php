@@ -20,9 +20,12 @@ class RegistrationFormType extends AbstractType
     {
         $builder
             ->add('email', EmailType::class)
-            ->add('password', PasswordType::class)
+            ->add('password', PasswordType::class, [
+                'required' => true
+            ])
             ->add('confirmPassword', PasswordType::class, [
-                'label' => "Confirm Password"
+                'label' => "Confirm Password",
+                'required' => true
             ])
             ->add('firstName', TextType::class, [
                 'label' => 'First Name'

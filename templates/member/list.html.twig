@@ -57,9 +57,10 @@
                             {% endif %}
                         </td>
                         <td>
-                            <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="{{ path('member_show_edit_form', {'memberId': member.id}) }}"><i data-feather="edit"></i></a>
-                            <a  class="btn btn-datatable btn-icon btn-transparent-dark" href="{{ path('member_to_delete', {'memberId': member.id }) }}"><i data-feather="trash-2"></i></a>
-                            <a  class="btn btn-datatable btn-icon btn-transparent-dark" href="{{ path('members_selected_show', {'memberId': member.id }) }}"><i data-feather="list"></i></a>
+                            <a class="btn btn-datatable btn-icon btn-transparent-dark" href="{{ path('members_selected_show', {'memberId': member.id }) }}"><i data-feather="zoom-in"></i></a>
+                            <a class="btn btn-datatable btn-icon btn-transparent-dark" href="{{ path('member_show_edit_form', {'memberId': member.id}) }}"><i data-feather="edit"></i></a>
+                            <a class="btn btn-datatable btn-icon btn-transparent-dark" href="{{ path('member_to_delete', {'memberId': member.id }) }}"><i data-feather="trash-2"></i></a>
+
                         </td>
                     </tr>
                     {% endfor %}

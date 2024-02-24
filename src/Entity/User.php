@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -28,13 +29,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var string The hashed password
      */
-    #[ORM\Column]
-    #[Assert\Length(min: 8, minMessage: 'Your password must be at least {{ limit }} characters long')]
-    #[Assert\Regex(pattern: '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).*$^', message: "Your password must contain at least one lowercase, one uppercase, one number and one special character")]
+    #[ORM\Column(nullable: true)]
+    #[Assert\Length(min: 8, minMessage: 'Votre mot de passe doit contenir au moins {{ limit }} caractères')]
+    #[Assert\Regex(pattern: '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).*$^', message: "Votre mot de passe doit contenir au moins, un majuscule, un minuscule, un chiffre et un caractère spécial!")]
     private ?string $password = null;
 
 
-    #[Assert\EqualTo(propertyPath: 'password', message: "Passwords don't match!")]
+    #[Assert\EqualTo(propertyPath: 'password', message: "Les mots de passe ne sont pas identiques!")]
     private ?string $confirmPassword = null;
 
     #[ORM\Column(length: 255)]
@@ -42,6 +43,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 255)]
     private ?string $lastName = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $profileImage = null;
 
     public function getId(): ?int
     {
@@ -92,12 +96,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @see PasswordAuthenticatedUserInterface
      */
-    public function getPassword(): string
+    public function getPassword(): ?string
     {
         return $this->password;
     }
 
-    public function setPassword(string $password): static
+    public function setPassword(?string $password): static
     {
         $this->password = $password;
 
@@ -144,6 +148,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setLastName(string $lastName): static
     {
         $this->lastName = $lastName;
+
+        return $this;
+    }
+
+    public function getProfileImage(): ?string
+    {
+        return $this->profileImage;
+    }
+
+    public function setProfileImage(?string $profileImage): static
+    {
+        $this->profileImage = $profileImage;
 
         return $this;
     }

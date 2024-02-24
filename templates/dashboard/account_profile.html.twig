@@ -7,8 +7,7 @@
                 <div class="row align-items-center justify-content-between pt-3">
                     <div class="col-auto mb-3">
                         <h1 class="page-header-title">
-                            <div class="page-header-icon"><i data-feather="user"></i></div>
-                            Profil Admin
+                            <div class="page-header-icon"><i data-feather="settings"></i> Paramètres</div>
                         </h1>
                     </div>
                 </div>
@@ -22,16 +21,15 @@
             <div class="col-xl-8">
                 <!-- Account details card-->
                 <div class="card mb-4">
-                    <div class="card-header">Paramètre</div>
                     <div class="card-body">
                         <form>
                                 <div class="card-body text-center">
                                     <!-- Profile picture image-->
                                     <img class="img-account-profile rounded-circle mb-2" src="{{ asset('dist/assets/img/illustrations/profiles/profile-1.png')}}" alt="" />
                                     <!-- Profile picture help block-->
-                                    <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
+                                    <div class="small font-italic text-muted mb-4">JPG ou PNG </div>
                                     <!-- Profile picture upload button-->
-                                    <button class="btn btn-primary" type="button">Upload new image</button>
+                                    <button class="btn btn-primary" type="button">Téléchargez une image </button>
                                 </div>
 
                             <div class="mb-3">
@@ -50,7 +48,8 @@
                                 <input class="form-control" id="inputUsername" type="password" placeholder="Confirmez votre mot de passe ..." value="" />
                             </div>
                             <!-- Save changes button-->
-                            <button class="btn btn-primary" type="button">Save changes</button>
+                            <button class="btn btn-primary" type="submit">Modifier</button>
+                            <button class="btn btn-dark" type="button">Annuler</button>
                             <div class="col-xl-4">
                                 <!-- Profile picture card-->
 
