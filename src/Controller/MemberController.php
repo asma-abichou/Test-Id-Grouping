@@ -30,6 +30,7 @@ class MemberController extends AbstractController
             "members" => $allMembers
         ]);
     }
+
     //Show a Member
     #[Route('/{memberId}/list', name: 'members_selected_show', methods: 'GET')]
     public function showMembersSelected($memberId, MemberRepository $memberRepository): Response
@@ -39,6 +40,7 @@ class MemberController extends AbstractController
             "showMember" => $showMember
         ]);
     }
+
     //Show Member to edit
     #[Route('/{memberId}/edit', name: 'member_show_edit_form', methods: 'GET')]
     public function memberShowEditForm($memberId, MemberRepository $memberRepository): Response
@@ -48,12 +50,37 @@ class MemberController extends AbstractController
             'memberToEdit' => $memberToEdit,
         ]);
     }
+
     //Process edit a member
     #[Route('/{memberId}/edit', name: 'member_save_edit_form', methods: 'POST')]
-    public function memberSaveEditForm(Request $request, $memberId, MemberRepository $memberRepository): Response
+    public function memberSaveEditForm(Request $request, $memberId, MemberRepository $memberRepository): response
     {
-        $data = $request->request->all();
-        $name = $data["name"];
+        $member = $memberRepository->find($memberId);
+        //dd($member);
+        $isActive = $member->getActif();
+            if ($isActive === 0) {
+                $member->setActif(1);
+            } else {
+                $member->setActif(0);
+            }
+            $this->entityManager->persist($member);
+            $this->entityManager->flush();
+            $this->addFlash('editMemberSuccess', 'Membre modifié avec succès!');
+
+            return $this->redirectToRoute('members_list', [
+                'member' => $member,
+            ]);
+
+    }
+   /*
+        $this->entityManager->persist($member);
+        $this->entityManager->flush();
+        $this->addFlash('editMemberSuccess', 'Membre modifié avec succès!');
+
+        return $this->redirectToRoute('members_list', [
+            'member' =>$member,
+        ]);
+       $name = $data["name"];
         $email = $data["email"];
         $address = $data["address"];
         $city = $data["city"];
@@ -87,14 +114,8 @@ class MemberController extends AbstractController
             $pictureFile->move($fullPath, $pictureFileName);
             // Saving picture path in the database
             $memberToEdit->setCoverImg($pictureFileName);
-        }
+        }*/
 
-        $this->entityManager->persist($memberToEdit);
-        $this->entityManager->flush();
-        $this->addFlash('editMemberSuccess', 'Membre modifié avec succès!');
-        return $this->redirectToRoute('members_list');
-
-    }
     //Delete a Member
     #[Route('/{memberId}/delete', name: 'member_to_delete')]
     public function removeMember($memberId, MemberRepository $memberRepository): Response

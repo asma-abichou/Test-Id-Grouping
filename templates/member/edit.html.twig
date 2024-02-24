@@ -31,7 +31,7 @@
                             <form action="{{ path('member_save_edit_form', {'memberId': memberToEdit.id}) }}" method="POST" enctype="multipart/form-data">
                                 <div class="row gx-3 mb-3">
                                     <div class="form-check mb-2">
-                                        <input  class="form-check-input" id="checkActive" type="checkbox" name="actif" {% if memberToEdit.actif == 1 %} checked {% endif %} disabled>
+                                        <input  class="form-check-input" id="checkActive" type="checkbox" name="actif" >
                                         <label class="form-check-label" for="checkActive">Actif</label>
                                     </div>
                                 </div>
@@ -95,8 +95,8 @@
 
                                 <!-- Save changes button-->
                                 <div class="text-center">
-                                    <a class="btn btn-secondary" href="{{ path('members_list') }}">Rejeter Compte</a>
-                                    <button class="btn btn-success" type="submit">Valider Compte</button>
+                                    <button class="btn btn-secondary" name="rejeterCompte" href="{{ path('members_list') }}">Rejeter Compte</button>
+                                    <button class="btn btn-success" type="submit" name="validerCompte">Valider Compte</button>
                                 </div>
                             </form>
                         </div>

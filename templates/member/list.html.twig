@@ -17,9 +17,9 @@
     </header>
     <!-- Main page content-->
     <div class="container-fluid px-4">
-        {% for errorMessage in app.flashes('editMemberSuccess') %}
+        {% for successMessage in app.flashes('editMemberSuccess') %}
             <div class="alert alert-success">
-                {{ errorMessage }}
+                {{ successMessage }}
             </div>
         {% endfor %}
         <div class="card">
