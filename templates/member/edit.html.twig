@@ -31,7 +31,7 @@
                             <form action="{{ path('member_save_edit_form', {'memberId': memberToEdit.id}) }}" method="POST" enctype="multipart/form-data">
                                 <div class="row gx-3 mb-3">
                                     <div class="form-check mb-2">
-                                        <input  class="form-check-input" id="checkActive" type="checkbox" name="actif" >
+                                        <input  class="form-check-input" id="checkActive" type="checkbox" name="actif" {% if memberToEdit.actif == 1 %} checked {% endif %}disabled/>
                                         <label class="form-check-label" for="checkActive">Actif</label>
                                     </div>
                                 </div>
@@ -51,29 +51,29 @@
                                 <div class="row gx-3 mb-3">
                                     <div class="col-md-6">
                                         <label class="small mb-1" for="inputUsername">Nom </label>
-                                        <input class="form-control" name="name" id="inputUsername" type="text" placeholder="Entrez votre nom ..." value="{{ memberToEdit.name }}" />
+                                        <input class="form-control" name="name" id="inputUsername" type="text" placeholder="Entrez votre nom ..." value="{{ memberToEdit.name }}" readonly/>
                                     </div>
                                     <div class="col-md-6">
                                         <label class="small mb-1" for="inputEmail">Email</label>
-                                        <input class="form-control" name="email" id="inputEmail" type="email" placeholder="Entrez votre email..." value="{{ memberToEdit.email }}" />
+                                        <input class="form-control" name="email" id="inputEmail" type="email" placeholder="Entrez votre email..." value="{{ memberToEdit.email }}" readonly/>
                                     </div>
                                 </div>
 
                                 <div class="row gx-3 mb-3">
                                     <div class="col-md-12">
                                         <label class="small mb-1" for="inputAdresse">Adresse</label>
-                                        <input class="form-control" name="address" id="inputAdresse" type="text" placeholder="Entrez votre adresse ..." value="{{ memberToEdit.address }}" />
+                                        <input class="form-control" name="address" id="inputAdresse" type="text" placeholder="Entrez votre adresse ..." value="{{ memberToEdit.address }}" readonly/>
                                     </div>
                                 </div>
 
                                 <div class="row gx-3 mb-3">
                                     <div class="col-md-6">
                                         <label class="small mb-1" for="inputCity">Ville</label>
-                                        <input class="form-control" name="city" id="inputCity" type="text" placeholder="Entrez votre ville ... " value="{{ memberToEdit.city }}" />
+                                        <input class="form-control" name="city" id="inputCity" type="text" placeholder="Entrez votre ville ... " value="{{ memberToEdit.city }}" readonly/>
                                     </div>
                                     <div class="col-md-6">
                                         <label class="small mb-1" for="inputPhone">Télephone</label>
-                                        <input class="form-control" name="phone" id="inputPhone" type="tel" placeholder="Entrez votre télèphone ..." value="" />
+                                        <input class="form-control" name="phone" id="inputPhone" type="tel" placeholder="Entrez votre télèphone ..." value="" readonly/>
                                     </div>
                                 </div>
 
@@ -81,11 +81,11 @@
                                 <div class="row gx-3 mb-3">
                                     <div class="col-md-6">
                                         <label class="small mb-1" for="inputCodePost">Code postal</label>
-                                        <input class="form-control" name="postCode" id="inputCodePost" type="text" placeholder="Entrez votre code postal ..." value="{{ memberToEdit.postCode }}" />
+                                        <input class="form-control" name="postCode" id="inputCodePost" type="text" placeholder="Entrez votre code postal ..." value="{{ memberToEdit.postCode }}" readonly/>
                                     </div>
                                     <div class="col-md-6">
                                         <label class="small mb-1" for="inputCountry">Pays</label>
-                                        <input class="form-control" name="country" id="inputCountry" type="text" placeholder="Entrez votre pays ..." value="{{ memberToEdit.country }}" />
+                                        <input class="form-control" name="country" id="inputCountry" type="text" placeholder="Entrez votre pays ..." value="{{ memberToEdit.country }}" readonly/>
                                     </div>
                                 </div>
                                 <div class="mb-3">
@@ -95,8 +95,8 @@
 
                                 <!-- Save changes button-->
                                 <div class="text-center">
-                                    <button class="btn btn-secondary" name="rejeterCompte" href="{{ path('members_list') }}">Rejeter Compte</button>
-                                    <button class="btn btn-success" type="submit" name="validerCompte">Valider Compte</button>
+                                    <button class="btn btn-secondary" type="submit" name="reject" href="{{ path('members_list') }}">Rejeter Compte</button>
+                                    <button class="btn btn-success" type="submit" name="confirm">Valider Compte</button>
                                 </div>
                             </form>
                         </div>

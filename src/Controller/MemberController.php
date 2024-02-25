@@ -1,10 +1,9 @@
 <?php
 
 namespace App\Controller;
-use App\Entity\Member;
+
 use App\Repository\MemberRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Form\FileUploadError;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,7 +20,7 @@ class MemberController extends AbstractController
     {
     }
 
-    // List of all the members
+    // List of all members
     #[Route('/list', name: 'members_list', methods: 'GET')]
     public function membersList(MemberRepository $memberRepository): Response
     {
@@ -53,24 +52,36 @@ class MemberController extends AbstractController
 
     //Process edit a member
     #[Route('/{memberId}/edit', name: 'member_save_edit_form', methods: 'POST')]
-    public function memberSaveEditForm(Request $request, $memberId, MemberRepository $memberRepository): response
+    public function memberSaveEditForm($memberId, MemberRepository $memberRepository): response
     {
         $member = $memberRepository->find($memberId);
-        //dd($member);
-        $isActive = $member->getActif();
-            if ($isActive === 0) {
-                $member->setActif(1);
-            } else {
-                $member->setActif(0);
-            }
-            $this->entityManager->persist($member);
-            $this->entityManager->flush();
-            $this->addFlash('editMemberSuccess', 'Membre modifié avec succès!');
 
-            return $this->redirectToRoute('members_list', [
-                'member' => $member,
-            ]);
+        if(isset($_POST['confirm'])) {
+            $member->setActif(1); // Set the Actif status to 1
+        } else if(isset($_POST['reject'])) {
+            $member->setActif(0); // Set the Actif status to 0
+        }
 
+        $this->entityManager->persist($member);
+        $this->entityManager->flush();
+        $this->addFlash('editMemberSuccess', 'Membre modifié avec succès!');
+
+        return $this->redirectToRoute('members_list', [
+            'memberId' => $memberId,
+        ]);
+
+    }
+    //Delete a Member
+    #[Route('/{memberId}/delete', name: 'member_to_delete')]
+    public function removeMember($memberId, MemberRepository $memberRepository): Response
+    {
+        //$data = $request->request->all();
+        $memberToDelete = $memberRepository->find($memberId);
+        //dd($memberToDelete);
+        $this->entityManager->remove($memberToDelete);
+        $this->entityManager->flush();
+        $this->addFlash('deleteSuccess', 'Membre supprimé avec succès!');
+        return $this->redirectToRoute('members_list');
     }
    /*
         $this->entityManager->persist($member);
@@ -116,18 +127,7 @@ class MemberController extends AbstractController
             $memberToEdit->setCoverImg($pictureFileName);
         }*/
 
-    //Delete a Member
-    #[Route('/{memberId}/delete', name: 'member_to_delete')]
-    public function removeMember($memberId, MemberRepository $memberRepository): Response
-    {
-        //$data = $request->request->all();
-        $memberToDelete = $memberRepository->find($memberId);
-        //dd($memberToDelete);
-        $this->entityManager->remove($memberToDelete);
-        $this->entityManager->flush();
-        $this->addFlash('deleteSuccess', 'Membre supprimé avec succès!');
-        return $this->redirectToRoute('members_list');
-    }
+
 }
 
 

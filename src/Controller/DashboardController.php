@@ -23,6 +23,7 @@ class DashboardController extends AbstractController
     )
     {
     }
+    //show home page and display the sum of member
     #[Route('/home', name: 'home')]
     public function home(MemberRepository $memberRepository): Response
     {
@@ -31,12 +32,16 @@ class DashboardController extends AbstractController
             'allMembers' => $allMembers
         ]);
     }
+    // process profile user change password ,email and profile image
     #[Route('/settings', name: 'settings')]
-    public function settings(Request $request, UserPasswordHasherInterface $userPasswordHasher, SluggerInterface $slugger, UserRepository $userRepository): Response
+    public function ProfileUser(Request $request, UserPasswordHasherInterface $userPasswordHasher, SluggerInterface $slugger, UserRepository $userRepository): Response
     {
+        //get the user identifier (email)
         $currentUserEmail = $this->getUser()->getUserIdentifier();
         $currentUser = $userRepository->findOneBy(["email" => $currentUserEmail]);
+        //get the password of current user
         $currentUserPassword = $currentUser->getPassword();
+        //create form profile user
         $form = $this->createForm(MyProfileFormType::class, $currentUser);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
